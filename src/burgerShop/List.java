@@ -1,4 +1,12 @@
 package burgerShop;
+
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+        
 public class List {
    private Burger[] burgerArray;
    private int nextIndex;
@@ -8,7 +16,7 @@ public class List {
     public List() {
         nextIndex = 0;
         loadFact = 0;
-        initSize = 100;
+        initSize = 0;
         burgerArray = new Burger[initSize];
     }
     public List(int initSize, double loadFact){
@@ -77,5 +85,9 @@ public class List {
             tempBurgerArray[i] = burgerArray[i];
         }
         burgerArray = tempBurgerArray;
-    }  
+    }
+    
+    //-----------------Genarate Order Id-----------------------
+    
+    
 }
