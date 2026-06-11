@@ -200,7 +200,7 @@ public class HomePage extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new HomePage().setVisible(true);
-                
+                System.out.println(new java.io.File("Order.txt").getAbsolutePath());
             }
         });
     }
