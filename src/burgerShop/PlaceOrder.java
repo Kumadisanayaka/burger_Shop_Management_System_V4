@@ -4,6 +4,7 @@ package burgerShop;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -36,12 +37,17 @@ public class PlaceOrder extends javax.swing.JFrame {
         statuslbl = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         textFPanel = new javax.swing.JPanel();
+        placeOrderbtn = new javax.swing.JButton();
+        backHomebtn = new javax.swing.JButton();
+        cancelbtn = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        totaltex = new javax.swing.JTextField();
         orderIdtxt = new javax.swing.JTextField();
         customerIdtxt = new javax.swing.JTextField();
         qtytxt = new javax.swing.JTextField();
-        statustxt = new javax.swing.JTextField();
         namelbl = new javax.swing.JLabel();
         nametxt = new javax.swing.JTextField();
+        statuslbl2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
@@ -74,26 +80,79 @@ public class PlaceOrder extends javax.swing.JFrame {
 
         textFPanel.setBackground(new java.awt.Color(255, 255, 255));
 
+        placeOrderbtn.setBackground(new java.awt.Color(51, 255, 51));
+        placeOrderbtn.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        placeOrderbtn.setForeground(new java.awt.Color(255, 255, 255));
+        placeOrderbtn.setText("Place Order");
+        placeOrderbtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                placeOrderbtnActionPerformed(evt);
+            }
+        });
+
+        backHomebtn.setBackground(new java.awt.Color(255, 102, 102));
+        backHomebtn.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        backHomebtn.setForeground(new java.awt.Color(255, 255, 255));
+        backHomebtn.setText("Back To Home");
+        backHomebtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                backHomebtnActionPerformed(evt);
+            }
+        });
+
+        cancelbtn.setBackground(new java.awt.Color(255, 102, 102));
+        cancelbtn.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        cancelbtn.setForeground(new java.awt.Color(255, 255, 255));
+        cancelbtn.setText("Cancel");
+
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel1.setText("NET Total :");
+
+        totaltex.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        totaltex.setForeground(new java.awt.Color(255, 102, 102));
+        totaltex.setBorder(null);
+        totaltex.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                totaltexActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout textFPanelLayout = new javax.swing.GroupLayout(textFPanel);
         textFPanel.setLayout(textFPanelLayout);
         textFPanelLayout.setHorizontalGroup(
             textFPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 202, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, textFPanelLayout.createSequentialGroup()
+                .addContainerGap(121, Short.MAX_VALUE)
+                .addGroup(textFPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(textFPanelLayout.createSequentialGroup()
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(totaltex, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(textFPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(placeOrderbtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(backHomebtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(cancelbtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
         );
         textFPanelLayout.setVerticalGroup(
             textFPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGroup(textFPanelLayout.createSequentialGroup()
+                .addGap(18, 18, 18)
+                .addComponent(placeOrderbtn)
+                .addGap(18, 18, 18)
+                .addComponent(backHomebtn)
+                .addGap(18, 18, 18)
+                .addComponent(cancelbtn)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(textFPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(totaltex, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(24, 24, 24))
         );
 
         customerIdtxt.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 customerIdtxtActionPerformed(evt);
-            }
-        });
-
-        statustxt.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                statustxtActionPerformed(evt);
             }
         });
 
@@ -105,6 +164,9 @@ public class PlaceOrder extends javax.swing.JFrame {
                 nametxtActionPerformed(evt);
             }
         });
+
+        statuslbl2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        statuslbl2.setText("Preparing.....");
 
         javax.swing.GroupLayout mainPanelLayout = new javax.swing.GroupLayout(mainPanel);
         mainPanel.setLayout(mainPanelLayout);
@@ -119,16 +181,17 @@ public class PlaceOrder extends javax.swing.JFrame {
                     .addComponent(statuslbl)
                     .addComponent(namelbl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
-                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(orderIdtxt, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(customerIdtxt, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(nametxt, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(qtytxt, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(statustxt, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(orderIdtxt, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(customerIdtxt, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(nametxt, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(qtytxt, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(statuslbl2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(textFPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(127, Short.MAX_VALUE))
+                .addContainerGap(71, Short.MAX_VALUE))
             .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         mainPanelLayout.setVerticalGroup(
@@ -153,12 +216,17 @@ public class PlaceOrder extends javax.swing.JFrame {
                         .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(qtylbl, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(qtytxt, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(14, 14, 14)
-                        .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(statuslbl, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(statustxt, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(textFPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(64, Short.MAX_VALUE))
+                        .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(mainPanelLayout.createSequentialGroup()
+                                .addGap(18, 18, 18)
+                                .addComponent(statuslbl, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, mainPanelLayout.createSequentialGroup()
+                                .addGap(21, 21, 21)
+                                .addComponent(statuslbl2, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(mainPanelLayout.createSequentialGroup()
+                        .addComponent(textFPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(28, 28, 28)))
+                .addContainerGap(65, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -175,17 +243,13 @@ public class PlaceOrder extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void statustxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_statustxtActionPerformed
-        
-    }//GEN-LAST:event_statustxtActionPerformed
-
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         try {
             orderIdtxt.setText(genarateOrderId());
             orderIdtxt.setEditable(false);
             customerIdtxt.requestFocus();
         } catch (IOException ex) {
-            Logger.getLogger(PlaceOrder.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("File Error...");
         }
     }//GEN-LAST:event_formWindowOpened
 
@@ -199,28 +263,79 @@ public class PlaceOrder extends javax.swing.JFrame {
                 
                 while((line = br.readLine()) != null){
                     String[] data = line.split(",");
-                    if(customerId.equalsIgnoreCase(data[1])){
-                        nametxt.setText(data[2]);
-                        isHave = true;
-                        qtytxt.requestFocus();
-                        break;
+                    if(data.length > 2){
+                        if(customerId.equalsIgnoreCase(data[1])){
+                            nametxt.setText(data[2]);
+                            isHave = true;
+                            qtytxt.requestFocus();
+                            break;
+                        }
                     }
                 }
                 br.close();
             } catch (FileNotFoundException ex) {
-                Logger.getLogger(PlaceOrder.class.getName()).log(Level.SEVERE, null, ex);
+                customerIdtxt.setText(genarateCustomerId());
             } catch (IOException ex) {
                 Logger.getLogger(PlaceOrder.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         if(!isHave){
-            
+            int op = JOptionPane.showConfirmDialog(this, "Do You want to add new customer?");
+            if(op == JOptionPane.YES_OPTION){
+                customerIdtxt.setText("");
+                customerIdtxt.setText(genarateCustomerId());
+                customerIdtxt.setEditable(false);
+                nametxt.requestFocus();
+            }
         }
     }//GEN-LAST:event_customerIdtxtActionPerformed
 
     private void nametxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nametxtActionPerformed
-        // TODO add your handling code here:
+        qtytxt.requestFocus();
     }//GEN-LAST:event_nametxtActionPerformed
+
+    private void placeOrderbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_placeOrderbtnActionPerformed
+        FileWriter fw = null;
+        try {
+            int qty = Integer.parseInt(qtytxt.getText());
+            String total = qty * Burger.UNIT_PRICE+"";
+            totaltex.setText(total);
+            fw = new FileWriter("Order.txt",true);
+            
+            String orderId = orderIdtxt.getText();
+            String custmerId = customerIdtxt.getText();
+            String custName = nametxt.getText();
+            int burgerQty = qty;
+            int status = 0;
+            
+            fw.write(orderId+","+custmerId+","+custName+","+burgerQty+","+status+"\n");
+            
+            fw.close();
+            
+            JOptionPane.showMessageDialog(this,"Order Placed Successfully...");
+            
+            orderIdtxt.setText(genarateOrderId());
+            customerIdtxt.setText("");
+            customerIdtxt.setEditable(true);
+            nametxt.setText("");
+            qtytxt.setText("");
+            totaltex.setText("");
+            
+            
+        } catch (IOException ex) {
+            System.out.println("File Error...");
+        } 
+    }//GEN-LAST:event_placeOrderbtnActionPerformed
+
+    private void totaltexActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_totaltexActionPerformed
+        
+    }//GEN-LAST:event_totaltexActionPerformed
+
+    private void backHomebtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backHomebtnActionPerformed
+       new HomePage().setVisible(true);
+       this.dispose();
+    }//GEN-LAST:event_backHomebtnActionPerformed
+    //-------------------------Genarate Order ID-----------------------------//
     public String genarateOrderId() throws IOException{
         String lastLine = null;
         
@@ -230,61 +345,147 @@ public class PlaceOrder extends javax.swing.JFrame {
            String line;
            
            while((line = br.readLine()) != null){
-               lastLine = line;
+               if(!line.trim().isEmpty()){
+                lastLine = line;
+               }
            }
            br.close();
            
        } catch (FileNotFoundException ex) {
-           System.out.println("File Error...");
-       }
-       
-       if(lastLine == null){
            return "O000";
        }
        
+       if(lastLine == null || lastLine.trim().isEmpty()){
+           return "O000";
+       }
        String[] data = lastLine.split(",");
+       
+       if(data.length == 0){
+           return "O000";
+       }else{
        
        String lastOrderId = data[0];
        int num = Integer.parseInt(lastOrderId.substring(1));
        
        return String.format("O%03d", num+1);
+       }
+       
     }
-    public String genarateCustomerId() throws IOException{
+    
+    //--------------------Genarate Customer ID----------------------//
+    public String genarateCustomerId(){
         String line;
         int count = 0;
-        BufferedReader br = new BufferedReader(new FileReader("Order.txt"));
-        while((line = br.readLine()) != null){
-            count++;
+        BufferedReader br;
+        try {
+            br = new BufferedReader(new FileReader("Order.txt"));
+        } catch (FileNotFoundException ex) {
+            return "C000";
         }
-        br.close();
-        String[] tempOrderId = new String[count];
+        try {
+            while((line = br.readLine()) != null){
+                if(!line.trim().isEmpty()){
+                    count++;
+                }
+            }
+             br.close();
+        } catch (IOException ex) {
+            if(count == 0){
+                return "C000";
+            }
+        }
+       
+        String[] tempCustId = new String[count];
         
       String line1;
-      BufferedReader br1 = new BufferedReader(new FileReader("Order.txt"));
+      BufferedReader br1;
+        try {
+            br1 = new BufferedReader(new FileReader("Order.txt"));
+        } catch (FileNotFoundException ex) {
+            return "C000";
+        }
       int index = 0;
-      while((line1 = br1.readLine()) != null){
-          String[] data = line1.split(",");
-          tempOrderId[index] = data[0];
-          index++;
-      }
-      br1.close();
+        try {
+            while((line1 = br1.readLine()) != null){
+                if(!line1.trim().isEmpty()){
+                    String[] data = line1.split(",");
+                    if(data.length > 1){
+                        tempCustId[index] = data[1];
+                        index++;
+                    }
+                }
+            }
+            
+        } catch (IOException ex) {
+            return "C000";
+        } 
       
-      return null;
+      int count1 = 0;
+      for(int i = 0; i < tempCustId.length; i++){
+          for(int j = i + 1; j < tempCustId.length; j++){
+              if(tempCustId[i].equalsIgnoreCase(tempCustId[j])){
+                  count1++;
+                  break;
+              }
+          }
+      }
+      
+      String[] dupRemoveCustomerIdArray = new String[tempCustId.length - count1];
+      
+      int ind = 0;
+      for(int i = 0; i < tempCustId.length; i++){
+          boolean dupHave = false;
+          String currtCustId = tempCustId[i];
+          
+          for(int x = 0; x < dupRemoveCustomerIdArray.length; x++ ){
+              if(dupRemoveCustomerIdArray[x] != null && currtCustId.equalsIgnoreCase(dupRemoveCustomerIdArray[x]) ){
+                  dupHave = true;
+                  break;
+              }
+          }
+          if(!dupHave){
+              dupRemoveCustomerIdArray[ind] = currtCustId;
+              ind++;
+          }
+          
+      }
+      for(int i = 0; i < dupRemoveCustomerIdArray.length; i++){
+          for(int j = i + 1; j < dupRemoveCustomerIdArray.length; j++){
+              int iD1 = Integer.parseInt(dupRemoveCustomerIdArray[i].substring(1));
+              int iD2 = Integer.parseInt(dupRemoveCustomerIdArray[j].substring(1));
+              if(iD1 > iD2){
+                  String temp = dupRemoveCustomerIdArray[i];
+                  dupRemoveCustomerIdArray[i] = dupRemoveCustomerIdArray[j];
+                  dupRemoveCustomerIdArray[j] = temp;
+              }
+          }
+      }
+      if(dupRemoveCustomerIdArray.length == 0){
+          return "C000";
+      }
+      
+      int num = Integer.parseInt(dupRemoveCustomerIdArray[dupRemoveCustomerIdArray.length - 1].substring(1));
+      return String.format("C%03d",num + 1);
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton backHomebtn;
+    private javax.swing.JButton cancelbtn;
     private javax.swing.JLabel customerIdlbl;
     private javax.swing.JTextField customerIdtxt;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel mainPanel;
     private javax.swing.JLabel namelbl;
     private javax.swing.JTextField nametxt;
     private javax.swing.JLabel orderIdlbl;
     private javax.swing.JTextField orderIdtxt;
+    private javax.swing.JButton placeOrderbtn;
     private javax.swing.JLabel qtylbl;
     private javax.swing.JTextField qtytxt;
     private javax.swing.JLabel statuslbl;
-    private javax.swing.JTextField statustxt;
+    private javax.swing.JLabel statuslbl2;
     private javax.swing.JPanel textFPanel;
+    private javax.swing.JTextField totaltex;
     // End of variables declaration//GEN-END:variables
 }
