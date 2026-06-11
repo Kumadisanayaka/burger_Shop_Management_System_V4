@@ -1,0 +1,5 @@
+O000,C000,Pathum,5,1
+O001,C001,Kamal,4,0
+O002,C002,Thusara,3,1
+O003,C000,Pathum,3,1
+O004,C003,Apeksha,3,0
