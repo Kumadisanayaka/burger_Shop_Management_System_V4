@@ -7,6 +7,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 public class PlaceOrder extends javax.swing.JFrame {
 
@@ -39,6 +40,8 @@ public class PlaceOrder extends javax.swing.JFrame {
         customerIdtxt = new javax.swing.JTextField();
         qtytxt = new javax.swing.JTextField();
         statustxt = new javax.swing.JTextField();
+        namelbl = new javax.swing.JLabel();
+        nametxt = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
@@ -82,9 +85,24 @@ public class PlaceOrder extends javax.swing.JFrame {
             .addGap(0, 0, Short.MAX_VALUE)
         );
 
+        customerIdtxt.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                customerIdtxtActionPerformed(evt);
+            }
+        });
+
         statustxt.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 statustxtActionPerformed(evt);
+            }
+        });
+
+        namelbl.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        namelbl.setText(" Name :");
+
+        nametxt.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nametxtActionPerformed(evt);
             }
         });
 
@@ -96,19 +114,21 @@ public class PlaceOrder extends javax.swing.JFrame {
                 .addGap(54, 54, 54)
                 .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(orderIdlbl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(customerIdlbl, javax.swing.GroupLayout.DEFAULT_SIZE, 96, Short.MAX_VALUE)
+                    .addComponent(customerIdlbl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(qtylbl)
-                    .addComponent(statuslbl))
+                    .addComponent(statuslbl)
+                    .addComponent(namelbl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(orderIdtxt, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(customerIdtxt, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(customerIdtxt, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(nametxt, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(qtytxt, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(statustxt, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(textFPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(125, Short.MAX_VALUE))
+                .addContainerGap(127, Short.MAX_VALUE))
             .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         mainPanelLayout.setVerticalGroup(
@@ -126,6 +146,10 @@ public class PlaceOrder extends javax.swing.JFrame {
                             .addComponent(customerIdlbl, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(customerIdtxt, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
+                        .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(namelbl, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(nametxt, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
                         .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(qtylbl, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(qtytxt, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -134,7 +158,7 @@ public class PlaceOrder extends javax.swing.JFrame {
                             .addComponent(statuslbl, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(statustxt, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(textFPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(119, Short.MAX_VALUE))
+                .addContainerGap(64, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -152,12 +176,51 @@ public class PlaceOrder extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void statustxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_statustxtActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_statustxtActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-  
+        try {
+            orderIdtxt.setText(genarateOrderId());
+            orderIdtxt.setEditable(false);
+            customerIdtxt.requestFocus();
+        } catch (IOException ex) {
+            Logger.getLogger(PlaceOrder.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_formWindowOpened
+
+    private void customerIdtxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_customerIdtxtActionPerformed
+        String customerId = customerIdtxt.getText();
+        boolean isHave = false;
+        if(customerId.length() == 4){
+            try {
+                BufferedReader br = new BufferedReader(new FileReader("Order.txt"));
+                String line;
+                
+                while((line = br.readLine()) != null){
+                    String[] data = line.split(",");
+                    if(customerId.equalsIgnoreCase(data[1])){
+                        nametxt.setText(data[2]);
+                        isHave = true;
+                        qtytxt.requestFocus();
+                        break;
+                    }
+                }
+                br.close();
+            } catch (FileNotFoundException ex) {
+                Logger.getLogger(PlaceOrder.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException ex) {
+                Logger.getLogger(PlaceOrder.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        if(!isHave){
+            
+        }
+    }//GEN-LAST:event_customerIdtxtActionPerformed
+
+    private void nametxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nametxtActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_nametxtActionPerformed
     public String genarateOrderId() throws IOException{
         String lastLine = null;
         
@@ -176,7 +239,7 @@ public class PlaceOrder extends javax.swing.JFrame {
        }
        
        if(lastLine == null){
-           return "O0000";
+           return "O000";
        }
        
        String[] data = lastLine.split(",");
@@ -186,12 +249,36 @@ public class PlaceOrder extends javax.swing.JFrame {
        
        return String.format("O%03d", num+1);
     }
+    public String genarateCustomerId() throws IOException{
+        String line;
+        int count = 0;
+        BufferedReader br = new BufferedReader(new FileReader("Order.txt"));
+        while((line = br.readLine()) != null){
+            count++;
+        }
+        br.close();
+        String[] tempOrderId = new String[count];
+        
+      String line1;
+      BufferedReader br1 = new BufferedReader(new FileReader("Order.txt"));
+      int index = 0;
+      while((line1 = br1.readLine()) != null){
+          String[] data = line1.split(",");
+          tempOrderId[index] = data[0];
+          index++;
+      }
+      br1.close();
+      
+      return null;
+    }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel customerIdlbl;
     private javax.swing.JTextField customerIdtxt;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel mainPanel;
+    private javax.swing.JLabel namelbl;
+    private javax.swing.JTextField nametxt;
     private javax.swing.JLabel orderIdlbl;
     private javax.swing.JTextField orderIdtxt;
     private javax.swing.JLabel qtylbl;
