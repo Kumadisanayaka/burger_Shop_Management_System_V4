@@ -86,8 +86,5 @@ public class List {
         }
         burgerArray = tempBurgerArray;
     }
-    
-    //-----------------Genarate Order Id-----------------------
-    
-    
+
 }
