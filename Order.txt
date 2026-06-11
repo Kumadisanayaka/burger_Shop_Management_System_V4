@@ -1,0 +1,5 @@
+
+O000,C000,pathum,5,0
+O001,C001,kasun,6,0
+O002,c001,kasun,8,0
+O003,C002,deshan,9,0
