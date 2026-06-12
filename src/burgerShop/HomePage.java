@@ -4,6 +4,11 @@
  */
 package burgerShop;
 
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.BufferedReader;
+import java.io.IOException;
+
 /**
  *
  * @author User
@@ -33,10 +38,12 @@ public class HomePage extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         placeOrderbtn = new javax.swing.JButton();
-        searchbtn = new javax.swing.JButton();
+        searchOrderbtn = new javax.swing.JButton();
         viewOrderbtn = new javax.swing.JButton();
         updateOrderDetailsbtn = new javax.swing.JButton();
         exitbtn = new javax.swing.JButton();
+        searchBestCustomerbtn = new javax.swing.JButton();
+        searchCustomerbtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -69,15 +76,17 @@ public class HomePage extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, leftPanelLayout.createSequentialGroup()
                 .addGap(44, 44, 44)
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 42, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
                 .addComponent(logo)
                 .addGap(36, 36, 36))
         );
 
         placeOrderbtn.setBackground(new java.awt.Color(232, 46, 46));
-        placeOrderbtn.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        placeOrderbtn.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         placeOrderbtn.setForeground(new java.awt.Color(255, 255, 255));
         placeOrderbtn.setText("Place Order");
+        placeOrderbtn.setBorder(null);
+        placeOrderbtn.setBorderPainted(false);
         placeOrderbtn.setOpaque(true);
         placeOrderbtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -85,62 +94,91 @@ public class HomePage extends javax.swing.JFrame {
             }
         });
 
-        searchbtn.setBackground(new java.awt.Color(232, 46, 46));
-        searchbtn.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
-        searchbtn.setForeground(new java.awt.Color(255, 255, 255));
-        searchbtn.setText("Search");
-        searchbtn.setOpaque(true);
+        searchOrderbtn.setBackground(new java.awt.Color(232, 46, 46));
+        searchOrderbtn.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        searchOrderbtn.setForeground(new java.awt.Color(255, 255, 255));
+        searchOrderbtn.setText("Search Order");
+        searchOrderbtn.setBorder(null);
+        searchOrderbtn.setOpaque(true);
 
         viewOrderbtn.setBackground(new java.awt.Color(232, 46, 46));
-        viewOrderbtn.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        viewOrderbtn.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         viewOrderbtn.setForeground(new java.awt.Color(255, 255, 255));
         viewOrderbtn.setText("View Orders");
+        viewOrderbtn.setBorder(null);
         viewOrderbtn.setOpaque(true);
 
         updateOrderDetailsbtn.setBackground(new java.awt.Color(232, 46, 46));
-        updateOrderDetailsbtn.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        updateOrderDetailsbtn.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         updateOrderDetailsbtn.setForeground(new java.awt.Color(255, 255, 255));
         updateOrderDetailsbtn.setText("Update Order Details");
+        updateOrderDetailsbtn.setBorder(null);
         updateOrderDetailsbtn.setOpaque(true);
 
         exitbtn.setBackground(new java.awt.Color(232, 46, 46));
         exitbtn.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         exitbtn.setForeground(new java.awt.Color(255, 255, 255));
         exitbtn.setText("Exit");
+        exitbtn.setBorder(null);
         exitbtn.setOpaque(true);
+
+        searchBestCustomerbtn.setBackground(new java.awt.Color(232, 46, 46));
+        searchBestCustomerbtn.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        searchBestCustomerbtn.setForeground(new java.awt.Color(255, 255, 255));
+        searchBestCustomerbtn.setText("Search Best Customer");
+        searchBestCustomerbtn.setBorder(null);
+        searchBestCustomerbtn.setOpaque(true);
+        searchBestCustomerbtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                searchBestCustomerbtnActionPerformed(evt);
+            }
+        });
+
+        searchCustomerbtn.setBackground(new java.awt.Color(232, 46, 46));
+        searchCustomerbtn.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        searchCustomerbtn.setForeground(new java.awt.Color(255, 255, 255));
+        searchCustomerbtn.setText("Search Customer");
+        searchCustomerbtn.setBorder(null);
+        searchCustomerbtn.setOpaque(true);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(56, Short.MAX_VALUE)
+                .addContainerGap(57, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(exitbtn, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(27, 27, 27))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(placeOrderbtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(searchbtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(searchOrderbtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(viewOrderbtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(updateOrderDetailsbtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(48, 48, 48))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(exitbtn, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(30, 30, 30))))
+                            .addComponent(updateOrderDetailsbtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(searchBestCustomerbtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(searchCustomerbtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(47, 47, 47))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(66, 66, 66)
-                .addComponent(placeOrderbtn)
-                .addGap(18, 18, 18)
-                .addComponent(searchbtn)
-                .addGap(18, 18, 18)
-                .addComponent(viewOrderbtn)
-                .addGap(18, 18, 18)
-                .addComponent(updateOrderDetailsbtn)
+                .addGap(63, 63, 63)
+                .addComponent(placeOrderbtn, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(searchBestCustomerbtn, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(searchOrderbtn, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(searchCustomerbtn, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(viewOrderbtn, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(updateOrderDetailsbtn, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(exitbtn, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(38, 38, 38))
+                .addGap(21, 21, 21))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -169,38 +207,39 @@ public class HomePage extends javax.swing.JFrame {
         new PlaceOrder().setVisible(true);
     }//GEN-LAST:event_placeOrderbtnActionPerformed
 
+    private void searchBestCustomerbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchBestCustomerbtnActionPerformed
+        new SearchBestCustomer().setVisible(true);
+    }//GEN-LAST:event_searchBestCustomerbtnActionPerformed
+
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(HomePage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(HomePage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(HomePage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(HomePage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
+    public static void main(String args[]) throws FileNotFoundException, IOException {
+       new HomePage().setVisible(true);
+       List burgerList = new List(100,0.25);
+       BufferedReader br = new BufferedReader(new FileReader("Order.txt"));
+       
+       String line;
+       while((line = br.readLine()) != null){
+           if(!line.trim().isEmpty()){
+              String[] data = line.split(",");
+              
+              String orderId = data[0];
+              String customerId = data[1];
+              String name = data[2];
+              int burgerQty = Integer.parseInt(data[3]);
+              int status = Integer.parseInt(data[4]);
+              
+              Burger burger = new Burger(orderId,customerId,name,burgerQty,status);
+              burgerList.add(burger);
+              
+           }
+           br.close();
+       }
+       
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new HomePage().setVisible(true);
-                System.out.println(new java.io.File("Order.txt").getAbsolutePath());
+                
             }
         });
     }
@@ -212,8 +251,11 @@ public class HomePage extends javax.swing.JFrame {
     private javax.swing.JPanel leftPanel;
     private javax.swing.JLabel logo;
     private javax.swing.JButton placeOrderbtn;
-    private javax.swing.JButton searchbtn;
+    private javax.swing.JButton searchBestCustomerbtn;
+    private javax.swing.JButton searchCustomerbtn;
+    private javax.swing.JButton searchOrderbtn;
     private javax.swing.JButton updateOrderDetailsbtn;
     private javax.swing.JButton viewOrderbtn;
     // End of variables declaration//GEN-END:variables
+
 }
