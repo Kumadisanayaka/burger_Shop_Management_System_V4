@@ -86,5 +86,4 @@ public class List {
         }
         burgerArray = tempBurgerArray;
     }
-
 }
