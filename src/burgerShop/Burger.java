@@ -20,12 +20,12 @@ public class Burger {
         status = 0;
     }
 
-    public Burger(String orderId, String customerId, String customarName, int burgerQty) {
+    public Burger(String orderId, String customerId, String customarName, int burgerQty, int status) {
         this.orderId = orderId;
         this.customerId = customerId;
         this.customarName = customarName;
         this.burgerQty = burgerQty;
-        this.status = 0;
+        this.status = status;
     }
     
     /**
