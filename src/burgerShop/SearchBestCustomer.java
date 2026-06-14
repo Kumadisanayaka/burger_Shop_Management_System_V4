@@ -116,7 +116,7 @@ public class SearchBestCustomer extends javax.swing.JFrame {
             while((line = br.readLine()) != null){
                 String[] data = line.split(",");
                 if(data.length > 4){
-                    if(data[4].equals("0")){
+                    if(data[4].equals("1")){
                         count++;
                     }
                 }
@@ -139,7 +139,7 @@ public class SearchBestCustomer extends javax.swing.JFrame {
                 if(!line.trim().isEmpty()){
                     String[] data = line.split(",");
                     if(data.length > 4){
-                        if(data[4].equalsIgnoreCase("0")){
+                        if(data[4].equalsIgnoreCase("1")){
                             customerIdArray[index] = data[1];
                             nameArray[index] = data[2];
                             int qty = Integer.parseInt(data[3]);
