@@ -78,6 +78,11 @@ public class List {
     public int size(){
         return nextIndex;
     }
+    public void update(int index, Burger burger){
+        if(index >= 0 && index < nextIndex){
+            burgerArray[index] = burger;
+        }
+    }
     
     private void extendArray(){
         Burger[] tempBurgerArray = new Burger[(int)(burgerArray.length * loadFact + 1)];
