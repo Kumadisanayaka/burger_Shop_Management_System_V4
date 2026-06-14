@@ -18,15 +18,15 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author User
  */
-public class SearchBestCustomer extends javax.swing.JFrame {
+public class PreparingOrders extends javax.swing.JFrame {
 
     /**
      * Creates new form HomePage
      */
-    public SearchBestCustomer() {
+    public PreparingOrders() {
         initComponents();
         setLocationRelativeTo(null);
-        setTitle("Search Best Customers");
+        setTitle("Preparing Orders");
     }
 
     /**
@@ -39,9 +39,9 @@ public class SearchBestCustomer extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        bestCustomertbl = new javax.swing.JTable();
         backbtn = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        preparingOrderstbl = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
@@ -55,20 +55,8 @@ public class SearchBestCustomer extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Search Best Customers");
+        jLabel1.setText("Preparing Orders");
         jLabel1.setOpaque(true);
-
-        bestCustomertbl.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        bestCustomertbl.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        bestCustomertbl.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "Customer ID", "Name", "Total"
-            }
-        ));
-        jScrollPane1.setViewportView(bestCustomertbl);
 
         backbtn.setBackground(new java.awt.Color(255, 102, 102));
         backbtn.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -80,181 +68,71 @@ public class SearchBestCustomer extends javax.swing.JFrame {
             }
         });
 
+        preparingOrderstbl.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Order Id", "Customer Id", "Name", "Order Qty", "Total"
+            }
+        ));
+        preparingOrderstbl.setShowGrid(true);
+        jScrollPane1.setViewportView(preparingOrderstbl);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(37, 37, 37)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 566, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(32, Short.MAX_VALUE))
+            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 635, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(backbtn)
-                .addGap(53, 53, 53))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(backbtn)
+                        .addGap(24, 24, 24))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 554, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(41, 41, 41))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 97, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 106, Short.MAX_VALUE)
                 .addComponent(backbtn)
-                .addGap(39, 39, 39))
+                .addGap(17, 17, 17))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-       int count = 0;
-        String line;
-        try {
-            BufferedReader br = new BufferedReader(new FileReader("Order.txt"));
-            while((line = br.readLine()) != null){
-                String[] data = line.split(",");
-                if(data.length > 4){
-                    if(data[4].equals("0")){
-                        count++;
-                    }
-                }
-            }
-        } catch (FileNotFoundException ex) {
-            System.out.println("File Error...");
-        } catch (IOException ex) {
-            System.out.println("File Error...");
-        }
-        
-        String[] customerIdArray = new String[count];
-        String[] nameArray = new String[count];
-        double[] totalArray = new double[count];
-        
-        line = "";
-        int index = 0;
+      String line;
+        DefaultTableModel dtm = (DefaultTableModel) preparingOrderstbl.getModel();
+        dtm.setRowCount(0);
         try {
             BufferedReader br = new BufferedReader(new FileReader("Order.txt"));
             while((line = br.readLine()) != null){
                 if(!line.trim().isEmpty()){
-                    String[] data = line.split(",");
-                    if(data.length > 4){
-                        if(data[4].equalsIgnoreCase("0")){
-                            customerIdArray[index] = data[1];
-                            nameArray[index] = data[2];
-                            int qty = Integer.parseInt(data[3]);
-                            double total = (double)qty * Burger.UNIT_PRICE;
-                            totalArray[index] = total;
-                            index++;
-                            
-                        }
-                    }
+                   String[] data = line.split(",");
+                   if(data[4].equals("0")){
+                       int qty = Integer.parseInt(data[3]);
+                       String total = String.format("%.2f", (double)qty * Burger.UNIT_PRICE);
+                       dtm.addRow(new Object[]{data[0],data[1],data[2],data[3],total});
+                   }
                 }
             }
         } catch (FileNotFoundException ex) {
-            Logger.getLogger(SearchBestCustomer.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("File Error...");
         } catch (IOException ex) {
-            Logger.getLogger(SearchBestCustomer.class.getName()).log(Level.SEVERE, null, ex);
+            ex.printStackTrace();
         }
-        
-        int count2 = 0;
-        for(int i = 0; i < customerIdArray.length; i++){
-            for(int j = i + 1; j < customerIdArray.length; j++){
-                if(customerIdArray[i].equalsIgnoreCase(customerIdArray[j])){
-                    count2++;
-                    break;
-                }
-            }
-        }
-        String[] dupRemoveCustomerIdArray = new String[customerIdArray.length - count2];
-        String[] dupRemoveNameArray = new String[customerIdArray.length - count2];
-        double[] dupRemoveTotalArray = new double[customerIdArray.length - count2];
-        
-        int in = 0;
-        boolean[] visited = new boolean[customerIdArray.length];
-        
-        for(int i = 0; i < customerIdArray.length; i++ ){
-            boolean isDup = false;
-            if(visited[i]) continue;
-            
-            for(int j = i + 1; j < customerIdArray.length; j++){
-                if(customerIdArray[i].equalsIgnoreCase(customerIdArray[j])){
-                    totalArray[i] += totalArray[j];
-                    visited[j] = true;
-                }
-            }
-            String currentCustId = customerIdArray[i];
-            String currentName = nameArray[i];
-            double currentTotal = totalArray[i];
-      
-            for(int x = 0; x < dupRemoveCustomerIdArray.length; x++ ){
-                if((dupRemoveCustomerIdArray[x] != null) && currentCustId.equalsIgnoreCase(dupRemoveCustomerIdArray[x])){
-                    isDup = true;
-                }
-            }
-            
-            if(!isDup){
-                dupRemoveCustomerIdArray[in] = currentCustId;
-                dupRemoveNameArray[in] = currentName;
-                dupRemoveTotalArray[in] = currentTotal;
-                in++;
-            }
-        }
-        
-        //-------sort Array--------------------------------------
-        
-        for(int i = 0; i < dupRemoveCustomerIdArray.length; i++){
-            for(int j = i + 1; j < dupRemoveCustomerIdArray.length; j++){
-                if(dupRemoveTotalArray[i] < dupRemoveTotalArray[j]){
-                    String tempId = dupRemoveCustomerIdArray[i];
-                    dupRemoveCustomerIdArray[i] = dupRemoveCustomerIdArray[j];
-                    dupRemoveCustomerIdArray[j] = tempId;
-                    
-                    String tempName = dupRemoveNameArray[i];
-                    dupRemoveNameArray[i] = dupRemoveNameArray[j];
-                    dupRemoveNameArray[j] = tempName;
-                    
-                    double tempTotal = dupRemoveTotalArray[i];
-                    dupRemoveTotalArray[i] = dupRemoveTotalArray[j];
-                    dupRemoveTotalArray[j] = tempTotal;
-                }
-            }
-        }
-        
-        DefaultTableModel dtm = (DefaultTableModel) bestCustomertbl.getModel();
-        
-        for(int i = 0; i < dupRemoveCustomerIdArray.length; i++){
-            dtm.addRow(new Object[]{
-                dupRemoveCustomerIdArray[i],
-                dupRemoveNameArray[i],
-                dupRemoveTotalArray[i]});
-        }
-        
-        //------------------Table Stylish---------------------
-        
-        DefaultTableCellRenderer center = new DefaultTableCellRenderer();
-        center.setHorizontalAlignment(JLabel.CENTER);
-
-        for(int i = 0; i < bestCustomertbl.getColumnCount(); i++){
-            bestCustomertbl.getColumnModel()
-                .getColumn(i)
-                .setCellRenderer(center);
-        }
-        
-        DefaultTableCellRenderer header = new DefaultTableCellRenderer();
-        header.setHorizontalAlignment(JLabel.CENTER);
-        header.setFont(new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 14));
-
-        for(int i = 0; i < bestCustomertbl.getColumnCount(); i++){
-            bestCustomertbl.getColumnModel()
-                    .getColumn(i)
-                    .setHeaderRenderer(header);
-        }
-        
     }//GEN-LAST:event_formWindowOpened
 
     private void backbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backbtnActionPerformed
-        new HomePage().setVisible(true);
+        new ViewOrder().setVisible(true);
         this.dispose();
     }//GEN-LAST:event_backbtnActionPerformed
 
@@ -264,9 +142,9 @@ public class SearchBestCustomer extends javax.swing.JFrame {
  
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton backbtn;
-    private javax.swing.JTable bestCustomertbl;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable preparingOrderstbl;
     // End of variables declaration//GEN-END:variables
 
 }
