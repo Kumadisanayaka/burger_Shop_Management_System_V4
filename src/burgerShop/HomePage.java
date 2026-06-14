@@ -112,6 +112,11 @@ public class HomePage extends javax.swing.JFrame {
         viewOrderbtn.setText("View Orders");
         viewOrderbtn.setBorder(null);
         viewOrderbtn.setOpaque(true);
+        viewOrderbtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                viewOrderbtnActionPerformed(evt);
+            }
+        });
 
         updateOrderDetailsbtn.setBackground(new java.awt.Color(232, 46, 46));
         updateOrderDetailsbtn.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -228,6 +233,10 @@ public class HomePage extends javax.swing.JFrame {
     private void searchCustomerbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchCustomerbtnActionPerformed
         new SearchCustomer().setVisible(true);
     }//GEN-LAST:event_searchCustomerbtnActionPerformed
+
+    private void viewOrderbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewOrderbtnActionPerformed
+        new ViewOrder().setVisible(true);
+    }//GEN-LAST:event_viewOrderbtnActionPerformed
 
     /**
      * @param args the command line arguments
