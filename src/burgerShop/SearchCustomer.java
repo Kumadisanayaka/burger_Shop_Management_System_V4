@@ -27,7 +27,7 @@ public class SearchCustomer extends javax.swing.JFrame {
     public SearchCustomer() {
         initComponents();
         setLocationRelativeTo(null);
-        setTitle("Search Order Details");
+        setTitle("Search Customer");
     }
 
     /**
