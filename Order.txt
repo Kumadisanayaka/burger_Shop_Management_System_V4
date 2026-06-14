@@ -1,6 +1,6 @@
-
 O000,C000,pathum,5,1
 O001,C001,kasun,6,0
+O001,C001,kasun,8,1
 O002,c001,kasun,8,1
 O003,C002,deshan,9,2
 O004,C001,kasun,5,1
@@ -10,4 +10,4 @@ O007,C003,Kaveesha,6,1
 O008,C004,Frank,6,1
 O009,C005,Kalum,6,0
 O010,C006,sara,10,0
-O011,C007,Pasindu,6,0
+O011,C007,Pasindu,6,1
