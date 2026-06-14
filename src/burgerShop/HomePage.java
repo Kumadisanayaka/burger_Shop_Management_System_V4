@@ -124,6 +124,11 @@ public class HomePage extends javax.swing.JFrame {
         updateOrderDetailsbtn.setText("Update Order Details");
         updateOrderDetailsbtn.setBorder(null);
         updateOrderDetailsbtn.setOpaque(true);
+        updateOrderDetailsbtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                updateOrderDetailsbtnActionPerformed(evt);
+            }
+        });
 
         exitbtn.setBackground(new java.awt.Color(232, 46, 46));
         exitbtn.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
@@ -238,12 +243,18 @@ public class HomePage extends javax.swing.JFrame {
         new ViewOrder().setVisible(true);
     }//GEN-LAST:event_viewOrderbtnActionPerformed
 
+    private void updateOrderDetailsbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateOrderDetailsbtnActionPerformed
+        new UpdateOrder().setVisible(true);
+    }//GEN-LAST:event_updateOrderDetailsbtnActionPerformed
+
     /**
      * @param args the command line arguments
      */
+    public static List burgerList = new List(100,0.25);
+    
     public static void main(String args[]) throws FileNotFoundException, IOException {
        new HomePage().setVisible(true);
-       List burgerList = new List(100,0.25);
+       
        BufferedReader br = new BufferedReader(new FileReader("Order.txt"));
        
        String line;
@@ -261,8 +272,8 @@ public class HomePage extends javax.swing.JFrame {
               burgerList.add(burger);
               
            }
-           br.close();
        }
+         br.close();
        
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
