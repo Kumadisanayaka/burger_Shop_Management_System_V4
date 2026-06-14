@@ -145,6 +145,11 @@ public class HomePage extends javax.swing.JFrame {
         searchCustomerbtn.setText("Search Customer");
         searchCustomerbtn.setBorder(null);
         searchCustomerbtn.setOpaque(true);
+        searchCustomerbtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                searchCustomerbtnActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -219,6 +224,10 @@ public class HomePage extends javax.swing.JFrame {
     private void searchOrderbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchOrderbtnActionPerformed
         new SearchOrderDetails().setVisible(true);
     }//GEN-LAST:event_searchOrderbtnActionPerformed
+
+    private void searchCustomerbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchCustomerbtnActionPerformed
+        new SearchCustomer().setVisible(true);
+    }//GEN-LAST:event_searchCustomerbtnActionPerformed
 
     /**
      * @param args the command line arguments
