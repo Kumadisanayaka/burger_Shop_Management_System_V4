@@ -275,6 +275,7 @@ public class UpdateOrder extends javax.swing.JFrame {
                                     nametxt.setText(data[2]);
                                     nametxt.setEditable(false);
                                     orderQtytxt.setText(data[3]);
+                                    orderQtytxt.setEditable(true);
                                     totaltxt.setText(total);
                                     totaltxt.setEditable(false);
                                     break;
@@ -337,6 +338,7 @@ public class UpdateOrder extends javax.swing.JFrame {
         Burger burger = new Burger(orderId,customerId,customerName,burgerQty,status);
         HomePage.burgerList.update(index,burger);
         
+        JOptionPane.showMessageDialog(this, "Order Updated Successfully.!");
         try {
             FileWriter fw = new FileWriter("Order.txt");
             
@@ -357,8 +359,11 @@ public class UpdateOrder extends javax.swing.JFrame {
                     statuscmb.setEnabled(false);
                     orderQtytxt.setEditable(false);
                     break;
+                default:
+                    statuscmb.setEnabled(true);
+                    orderQtytxt.setEditable(true);
             }
-            JOptionPane.showMessageDialog(this, "Order Updated Successfully.!");
+            
             
             
             
