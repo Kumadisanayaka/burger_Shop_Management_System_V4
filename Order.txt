@@ -8,6 +8,6 @@ O005,c001,kasun,5,1
 O006,c002,deshan,6,2
 O007,C003,Kaveesha,6,1
 O008,C004,Frank,6,1
-O009,C005,Kalum,6,0
-O010,C006,sara,10,0
-O011,C007,Pasindu,6,1
+O009,C005,Kalum,8,0
+O010,C006,sara,15,0
+O011,C006,sara,15,1
