@@ -1,87 +1,141 @@
 package model;
       
 public class List {
-   private Burger[] burgerArray;
-   private int nextIndex;
-   private int initSize;
-   private double loadFact;
+   private Node first;
+   
+   //--------------Add Burger-------------//
+   public boolean add(int index, Burger burger){
+       Node node = new Node(burger);
+       if(index >= 0 && index <= size()){
+           if(index==0){
+               node.next = first;
+               first = node;
+           }else{
+               int count = 0;
+               Node temp = first;
+               if(count < index - 1){
+                   temp = temp.next;
+                   count++;
+               }
+               node.next = temp.next;
+               temp.next = node;
+           }
+           return true;
+           }
+           return false;
+    }
+   //-------------Add First Burger-----------//
+   public boolean addFirst(Burger burger){
+       return add(0,burger);
+   }
+   //------------Add Last Burger------------//
+   public boolean addLast(Burger burger){
+       return add(size(),burger);
+   }  
+   //-----------find size------------//
+   public int size(){
+       int count = 0;
+       Node temp = first;
+       while(temp != null){
+           temp = temp.next;
+           count++;
+       }
+       return count;
+   }
+   //-------------Update Order---------//
+   public boolean update(int index, Burger burger){
+       Node node = new Node(burger);
+       Node temp = first;
+       if(index >= 0 && index < size()){
+           if(index == 0){
+               node.next = temp.next;
+               temp = node;
+           }else{
+            int count = 0;
+            while(count < index){
+                temp = temp.next;
+                count++;
+           }
+            node.next = temp.next;
+            temp = node;
+           }
+           return true;
+       }
+       return false;
+   }
+   //-----------Remove Burger---------//
+   public boolean remove(int index){
+       if(index >= 0 && index < size()){
+           if(index == 0){
+               first = first.next;
+           }else{
+               int count = 0;
+               Node temp = first;
+               while(count < index - 1){
+                   count++;
+                   temp = temp.next;
+               }
+               temp.next = temp.next.next;
+           }
+           return true;
+       }
+       return false;
+   }
+   //-------------Remove First Burger-------------//
+   public boolean removeFirst(){
+       return remove(0);
+   }
+   //------------Remove Last Burger-------------//
+   public boolean removeLast(){
+       return remove(size()-1);
+   }
+   //-----------Get burger------------------//
+   public Burger get(int index){
+       if(index >= 0 && index < size()){
+           int count = 0;
+           Node temp = first;
+           while(count < index){
+               count++;
+               temp = temp.next;
+           }
+           return temp.burger;
+       }
+       return null;
+   }
+   //---------indexOf-----------------------//
+   public int indexOf(Burger burger){
+       int index = 0;
+       Node temp = first;
+       while(temp != null){
+           if(burger.equals(temp.burger)){
+               return index;
+           }
+           index++;
+           temp = temp.next;
+       }
+       return -1;
+   }
+   
+   //-------------contains-------------------//
+   public boolean contains(Burger burger){
+       return indexOf(burger) != -1;
+   }
+   //-----------Remove Burger---------------//
+   public boolean remove(Burger burger){
+       int index = indexOf(burger);
+       return remove(index);
+   }
+   
+   
+//----------Node class------------
+    class Node{
+     private Burger burger;
+     private Node next;
 
-    public List() {
-        nextIndex = 0;
-        loadFact = 0;
-        initSize = 0;
-        burgerArray = new Burger[initSize];
-    }
-    public List(int initSize, double loadFact){
-        burgerArray = new Burger[initSize];
-        this.loadFact = loadFact;
-        nextIndex = 0;
-        this.initSize = initSize;
-    }
-    public void add(Burger burger){
-        if(nextIndex >= burgerArray.length){
-            extendArray();
+        public Node(Burger burger) {
+          this.burger = burger;
         }
-        burgerArray[nextIndex++] = burger;
-    }
-    
-    public void addLast(Burger burger){
-        add(burger);
-    }
-    public void addFirst(Burger burger){
-        add(0,burger);
-    }
-    public void add(int index,Burger burger){
-        if(index >= 0 && index <= nextIndex){
-            for(int i = nextIndex - 1; i >= index; i--){
-                burgerArray[i + 1] = burgerArray[i];
-            }
-            burgerArray[index] = burger;
-            nextIndex++;
-        }
-    }
-    public void removeFirst(){
-        remove(0);
-    }
-    public void removeLast(){
-        remove(nextIndex - 1);
-    }
-    public void remove(int index){
-        if(index >= 0 && index < nextIndex){
-            for(int i = index; i < nextIndex - 1; i++){
-                burgerArray[i] = burgerArray[i + 1]; 
-            }
-            nextIndex--;
-        }
-    }
-    
-    public Burger get(int index){
-        return index >= 0 && index < nextIndex ? burgerArray[index]:null;
-    }
-    public void printList(){
-        System.out.println("[");
-        for(int i = 0; i < nextIndex; i++){
-            System.out.println(burgerArray[i]+",");
-        }
-        System.out.println(isEmpty()?"empty]":"\b]");
-    }
-    public boolean isEmpty(){
-        return nextIndex <= 0;
-    }
-    public int size(){
-        return nextIndex;
-    }
-    public void update(int index,Burger burger){
-        if(index >= 0 && index < nextIndex){
-            burgerArray[index] = burger;
-        }
-    }
-    
-    private void extendArray(){
-        Burger[] tempBurgerArray = new Burger[(int)(burgerArray.length * loadFact + 1)];
-        for(int i = 0; i < burgerArray.length; i++){
-            tempBurgerArray[i] = burgerArray[i];
-        }
-        burgerArray = tempBurgerArray;
     }
 }
+
+
