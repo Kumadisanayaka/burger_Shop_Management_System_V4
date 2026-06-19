@@ -1,5 +1,5 @@
 
-package burgerShop;
+package view;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -331,7 +331,7 @@ public class PlaceOrder extends javax.swing.JFrame {
         FileWriter fw = null;
         try {
             int qty = Integer.parseInt(qtytxt.getText());
-            String total = String.format("%.2f", (double)qty * Burger.UNIT_PRICE);
+            String total = String.format("%.2f", (double)qty * model.Burger.UNIT_PRICE);
             totalTxt.setText(total);
             fw = new FileWriter("Order.txt",true);
             
