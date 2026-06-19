@@ -25,8 +25,8 @@ public class HomePage extends javax.swing.JFrame {
     private void initComponents() {
 
         leftPanel = new javax.swing.JPanel();
-        logo = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
+        logo = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         placeOrderbtn = new javax.swing.JButton();
         searchOrderbtn = new javax.swing.JButton();
@@ -41,25 +41,24 @@ public class HomePage extends javax.swing.JFrame {
 
         leftPanel.setBackground(new java.awt.Color(255, 102, 102));
 
-        logo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/burgerShop/logo2.png"))); // NOI18N
-
         jLabel1.setFont(new java.awt.Font("Eras Demi ITC", 1, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Welcome to Burgers");
+
+        logo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/logo2.png"))); // NOI18N
 
         javax.swing.GroupLayout leftPanelLayout = new javax.swing.GroupLayout(leftPanel);
         leftPanel.setLayout(leftPanelLayout);
         leftPanelLayout.setHorizontalGroup(
             leftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(leftPanelLayout.createSequentialGroup()
+                .addGap(16, 16, 16)
                 .addGroup(leftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(leftPanelLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(logo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(leftPanelLayout.createSequentialGroup()
-                        .addGap(16, 16, 16)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addComponent(logo, javax.swing.GroupLayout.PREFERRED_SIZE, 306, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 327, Short.MAX_VALUE))
                 .addContainerGap())
         );
         leftPanelLayout.setVerticalGroup(
@@ -67,9 +66,9 @@ public class HomePage extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, leftPanelLayout.createSequentialGroup()
                 .addGap(44, 44, 44)
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
-                .addComponent(logo)
-                .addGap(36, 36, 36))
+                .addGap(39, 39, 39)
+                .addComponent(logo, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(78, Short.MAX_VALUE))
         );
 
         placeOrderbtn.setBackground(new java.awt.Color(232, 46, 46));
@@ -157,7 +156,7 @@ public class HomePage extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(57, Short.MAX_VALUE)
+                .addContainerGap(20, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addComponent(exitbtn, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -187,7 +186,7 @@ public class HomePage extends javax.swing.JFrame {
                 .addComponent(viewOrderbtn, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(updateOrderDetailsbtn, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 97, Short.MAX_VALUE)
                 .addComponent(exitbtn, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(21, 21, 21))
         );
@@ -241,7 +240,7 @@ public class HomePage extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    public static List burgerList = new List(100,0.25);
+    public static List burgerList = new List();
     
     public static void main(String args[]) throws FileNotFoundException, IOException {
        new HomePage().setVisible(true);
@@ -260,7 +259,8 @@ public class HomePage extends javax.swing.JFrame {
               int status = Integer.parseInt(data[4]);
               
               Burger burger = new Burger(orderId,customerId,name,burgerQty,status);
-              burgerList.add(burger);
+              List intList = new List();
+              intList.addLast(burger);
               
            }
        }
