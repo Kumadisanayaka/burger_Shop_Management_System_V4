@@ -1,23 +1,14 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
-package burgerShop;
+package view;
 
+import model.Burger;
+import model.List;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.BufferedReader;
 import java.io.IOException;
 
-/**
- *
- * @author User
- */
 public class HomePage extends javax.swing.JFrame {
 
-    /**
-     * Creates new form HomePage
-     */
     public HomePage() {
         initComponents();
         setLocationRelativeTo(null);
