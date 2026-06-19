@@ -68,6 +68,10 @@ public class Burger {
         this.status = status;
     }
     
+    public boolean equals(Burger burger){
+        return burger.orderId.equalsIgnoreCase(orderId);
+    }
+    
     
 }
 
