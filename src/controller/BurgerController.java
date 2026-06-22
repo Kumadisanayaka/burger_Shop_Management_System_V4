@@ -342,4 +342,55 @@ public class BurgerController {
         return data;
     }
     
+    //------------------Search Customer----------------------------//
+    
+    public static Object[][] searchCustomer(String customerId) throws FileNotFoundException, IOException{
+    
+        String line;
+        int count = 0;
+        BufferedReader br = new BufferedReader(new FileReader("Order.txt"));
+        while((line = br.readLine()) != null){
+            String[] data = line.split(",");
+            if(customerId.equalsIgnoreCase(data[1])){
+                count++;
+            }
+        }
+        br.close();
+        
+        Object[][] customer = new Object[count][3];
+        
+        String line1;
+        int index = 0;
+        BufferedReader br1 = new BufferedReader(new FileReader("Order.txt"));
+        while((line1 = br1.readLine())!=null){
+            String[] data = line1.split(",");
+            if(customerId.equalsIgnoreCase(data[1])){
+                int qty = Integer.parseInt(data[3]);
+                String total = String.format("%.2f", (double)qty * Burger.UNIT_PRICE);
+                customer[index][0] = data[0];
+                customer[index][1] = data[3];
+                customer[index][2] = total;
+                index++;
+            }
+        }
+        br1.close();
+        
+        return customer;
+    }
+    //----------------Name Set----------------------//
+    public static String nameSet(String customerId) throws FileNotFoundException, IOException{
+        String line;
+        String name = "";
+        BufferedReader br = new BufferedReader(new FileReader("Order.txt"));
+        while((line = br.readLine()) != null){
+            String[] data = line.split(",");
+            if(customerId.equalsIgnoreCase(data[1])){
+                name = data[2];
+                break;
+            }
+        }
+        br.close();
+        return name;
+    }
+    
 }
