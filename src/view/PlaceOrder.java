@@ -1,14 +1,13 @@
 
 package view;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
+import controller.BurgerController;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import static controller.BurgerController.genarateOrderId;
+import model.Burger;
 
 public class PlaceOrder extends javax.swing.JFrame {
 
@@ -278,39 +277,34 @@ public class PlaceOrder extends javax.swing.JFrame {
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         try {
             orderIdtxt.setText(genarateOrderId());
-            orderIdtxt.setEditable(false);
-            customerIdtxt.requestFocus();
         } catch (IOException ex) {
-            System.out.println("File Error...");
+            ex.printStackTrace();
         }
+        orderIdtxt.setEditable(false);
+        customerIdtxt.requestFocus();
     }//GEN-LAST:event_formWindowOpened
 
     private void customerIdtxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_customerIdtxtActionPerformed
         String customerId = customerIdtxt.getText();
         boolean isHave = false;
         if(customerId.length() == 4){
+            Burger burger = null;
             try {
-                BufferedReader br = new BufferedReader(new FileReader("Order.txt"));
-                String line;
-                
-                while((line = br.readLine()) != null){
-                    String[] data = line.split(",");
-                    if(data.length > 2){
-                        if(customerId.equalsIgnoreCase(data[1])){
-                            nametxt.setText(data[2]);
-                            isHave = true;
-                            qtytxt.requestFocus();
-                            break;
-                        }
-                    }
-                }
-                br.close();
-            } catch (FileNotFoundException ex) {
-                System.out.println("Customer not found. Add as a new customer?");
-                customerIdtxt.setText("");
+                burger = BurgerController.searchCustomerId(customerId);
             } catch (IOException ex) {
                 Logger.getLogger(PlaceOrder.class.getName()).log(Level.SEVERE, null, ex);
             }
+            if(burger != null){
+                nametxt.setText(burger.getCustomarName());
+                qtytxt.requestFocus();
+            }else{
+                JOptionPane.showMessageDialog(this,"Customer ID is Not found...");
+                customerIdtxt.setText("");
+            }
+        
+        }else{
+            JOptionPane.showMessageDialog(this,"Invalid Id...!");
+            customerIdtxt.setText("");
         }
         /*if(!isHave){
             int op = JOptionPane.showConfirmDialog(this, "Do You want to add new customer?");
@@ -328,12 +322,11 @@ public class PlaceOrder extends javax.swing.JFrame {
     }//GEN-LAST:event_nametxtActionPerformed
 
     private void placeOrderbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_placeOrderbtnActionPerformed
-        FileWriter fw = null;
-        try {
+
             int qty = Integer.parseInt(qtytxt.getText());
             String total = String.format("%.2f", (double)qty * model.Burger.UNIT_PRICE);
             totalTxt.setText(total);
-            fw = new FileWriter("Order.txt",true);
+
             
             String orderId = orderIdtxt.getText();
             String custmerId = customerIdtxt.getText();
@@ -341,23 +334,24 @@ public class PlaceOrder extends javax.swing.JFrame {
             int burgerQty = qty;
             int status = 0;
             
-            fw.write(orderId+","+custmerId+","+custName+","+burgerQty+","+status+"\n");
-            
-            fw.close();
-            
+            boolean isAdd = controller.BurgerController.placeOrder(orderId, custmerId, custName, burgerQty, status);
             JOptionPane.showMessageDialog(this,"Order Placed Successfully...");
             
+            if(!isAdd){
+                JOptionPane.showMessageDialog(this, "Not Added!");
+            }
+            
+        try {
             orderIdtxt.setText(genarateOrderId());
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
             customerIdtxt.setText("");
             customerIdtxt.setEditable(true);
             nametxt.setText("");
             qtytxt.setText("");
             totaltex.setText("");
             
-            
-        } catch (IOException ex) {
-            System.out.println("File Error...");
-        } 
     }//GEN-LAST:event_placeOrderbtnActionPerformed
 
     private void totaltexActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_totaltexActionPerformed
@@ -370,141 +364,12 @@ public class PlaceOrder extends javax.swing.JFrame {
     }//GEN-LAST:event_backHomebtnActionPerformed
 
     private void newCustbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newCustbtnActionPerformed
-        customerIdtxt.setText(genarateCustomerId());
+        customerIdtxt.setText(controller.BurgerController.genarateCustomerId());
         nametxt.requestFocus();
     }//GEN-LAST:event_newCustbtnActionPerformed
-    //-------------------------Genarate Order ID-----------------------------//
-    public String genarateOrderId() throws IOException{
-        String lastLine = null;
-        
-       try {
-           BufferedReader br = new BufferedReader(new FileReader("Order.txt"));
-           
-           String line;
-           
-           while((line = br.readLine()) != null){
-               if(!line.trim().isEmpty()){
-                lastLine = line;
-               }
-           }
-           br.close();
-           
-       } catch (FileNotFoundException ex) {
-           return "O000";
-       }
-       
-       if(lastLine == null || lastLine.trim().isEmpty()){
-           return "O000";
-       }
-       String[] data = lastLine.split(",");
-       
-       if(data.length == 0){
-           return "O000";
-       }else{
-       
-       String lastOrderId = data[0];
-       int num = Integer.parseInt(lastOrderId.substring(1));
-       
-       return String.format("O%03d", num+1);
-       }
-       
-    }
     
-    //--------------------Genarate Customer ID----------------------//
-    public String genarateCustomerId(){
-        String line;
-        int count = 0;
-        BufferedReader br;
-        try {
-            br = new BufferedReader(new FileReader("Order.txt"));
-        } catch (FileNotFoundException ex) {
-            return "C000";
-        }
-        try {
-            while((line = br.readLine()) != null){
-                if(!line.trim().isEmpty()){
-                    count++;
-                }
-            }
-             br.close();
-        } catch (IOException ex) {
-            if(count == 0){
-                return "C000";
-            }
-        }
-       
-        String[] tempCustId = new String[count];
-        
-      String line1;
-      BufferedReader br1;
-        try {
-            br1 = new BufferedReader(new FileReader("Order.txt"));
-        } catch (FileNotFoundException ex) {
-            return "C000";
-        }
-      int index = 0;
-        try {
-            while((line1 = br1.readLine()) != null){
-                if(!line1.trim().isEmpty()){
-                    String[] data = line1.split(",");
-                    if(data.length > 1){
-                        tempCustId[index] = data[1];
-                        index++;
-                    }
-                }
-            }
-            
-        } catch (IOException ex) {
-            return "C000";
-        } 
-      
-      int count1 = 0;
-      for(int i = 0; i < tempCustId.length; i++){
-          for(int j = i + 1; j < tempCustId.length; j++){
-              if(tempCustId[i].equalsIgnoreCase(tempCustId[j])){
-                  count1++;
-                  break;
-              }
-          }
-      }
-      
-      String[] dupRemoveCustomerIdArray = new String[tempCustId.length - count1];
-      
-      int ind = 0;
-      for(int i = 0; i < tempCustId.length; i++){
-          boolean dupHave = false;
-          String currtCustId = tempCustId[i];
-          
-          for(int x = 0; x < dupRemoveCustomerIdArray.length; x++ ){
-              if(dupRemoveCustomerIdArray[x] != null && currtCustId.equalsIgnoreCase(dupRemoveCustomerIdArray[x]) ){
-                  dupHave = true;
-                  break;
-              }
-          }
-          if(!dupHave){
-              dupRemoveCustomerIdArray[ind] = currtCustId;
-              ind++;
-          }
-          
-      }
-      for(int i = 0; i < dupRemoveCustomerIdArray.length; i++){
-          for(int j = i + 1; j < dupRemoveCustomerIdArray.length; j++){
-              int iD1 = Integer.parseInt(dupRemoveCustomerIdArray[i].substring(1));
-              int iD2 = Integer.parseInt(dupRemoveCustomerIdArray[j].substring(1));
-              if(iD1 > iD2){
-                  String temp = dupRemoveCustomerIdArray[i];
-                  dupRemoveCustomerIdArray[i] = dupRemoveCustomerIdArray[j];
-                  dupRemoveCustomerIdArray[j] = temp;
-              }
-          }
-      }
-      if(dupRemoveCustomerIdArray.length == 0){
-          return "C000";
-      }
-      
-      int num = Integer.parseInt(dupRemoveCustomerIdArray[dupRemoveCustomerIdArray.length - 1].substring(1));
-      return String.format("C%03d",num + 1);
-    }
+    
+    
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton backHomebtn;
@@ -528,4 +393,5 @@ public class PlaceOrder extends javax.swing.JFrame {
     private javax.swing.JTextField totalTxt;
     private javax.swing.JTextField totaltex;
     // End of variables declaration//GEN-END:variables
+
 }
