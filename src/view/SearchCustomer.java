@@ -172,50 +172,36 @@ public class SearchCustomer extends javax.swing.JFrame {
 
     private void customerIdtxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_customerIdtxtActionPerformed
         String customerId = customerIdtxt.getText();
-        boolean isValid = false;
+        boolean isFound = false;
         
         if((customerId.length() != 4) || customerId.charAt(0) != 'c' && customerId.charAt(0) != 'C'){
             JOptionPane.showMessageDialog(this, "Invalid Customer ID...Please Re-Enter...");
             customerIdtxt.setText("");
-            isValid = true;
-        }
-        
-        if(!isValid){
-            DefaultTableModel dtm = (DefaultTableModel) orderDetailstbl.getModel();
-            dtm.setRowCount(0);
-            boolean isFound = false;
-            String line;
-            int count = 0;
-
+        }else{
+            String name = null;
             try {
-                BufferedReader br = new BufferedReader(new FileReader("Order.txt"));
-                while((line = br.readLine()) != null){
-                    if(!line.trim().isEmpty()){
-                        String[] data = line.split(",");
-                        if(customerId.equalsIgnoreCase(data[1])){
-                            isFound = true;
-                            nametxt.setText(data[2]);
-                            nametxt.setEditable(false);
-                            count++;
-                            
-                            
-                            int qty = Integer.parseInt(data[3]);
-                            String total = String.format("%.2f", (double)qty * Burger.UNIT_PRICE);
-                            dtm.addRow(new Object[]{data[0],data[3],total}); 
-                        }
-                    }
-                }
-                br.close();
-                 
-            } catch (FileNotFoundException ex) {
-                System.out.println("File Error...");
+                name = controller.BurgerController.nameSet(customerId);
             } catch (IOException ex) {
                 ex.printStackTrace();
             }
-            
-            if(!isFound){
-                JOptionPane.showMessageDialog(this, "Customer ID Not found!");
-            }
+            nametxt.setText(name);
+            nametxt.setEditable(false);
+            isFound = true;
+            try {
+                Object[][]data = controller.BurgerController.searchCustomer(customerId);
+                if(data != null){
+                    DefaultTableModel dtm = (DefaultTableModel) orderDetailstbl.getModel();
+                    dtm.setRowCount(0);
+                     for(int i = 0; i < data.length; i++){
+                         dtm.addRow(data[i]);
+                     }
+                }
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }    
+        }
+        if(!isFound){
+            JOptionPane.showMessageDialog(this, "Customer ID is Not Found.!");
         }
         
     }//GEN-LAST:event_customerIdtxtActionPerformed
