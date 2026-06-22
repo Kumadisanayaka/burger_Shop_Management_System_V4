@@ -13,12 +13,12 @@ import model.List;
 import view.SearchBestCustomer;
 
 public class BurgerController {
-    
-    //------------Order.txt reload List--------------//
     public static List burgerList = new List();
+    //------------Order.txt reload List--------------//
+     
     
     public static void burgerLoadList() throws FileNotFoundException, IOException{
-    
+        burgerList = new List();
         BufferedReader br = new BufferedReader(new FileReader("Order.txt"));
        
        String line;
@@ -33,8 +33,7 @@ public class BurgerController {
               int status = Integer.parseInt(data[4]);
               
               Burger burger = new Burger(orderId,customerId,name,burgerQty,status);
-              List intList = new List();
-              intList.addLast(burger);
+              burgerList.addLast(burger);
               
            }
        }
@@ -411,6 +410,7 @@ public class BurgerController {
                 burger = new Burger(orderID,custID,name,qty,status);
             }
         }
+        br.close();
         return burger;
     }
     
@@ -484,6 +484,119 @@ public class BurgerController {
         }
         br1.close();
         return order;
+    }
+    
+    //----------------------------Delivered Order Report----------------------//
+    
+    public static Object[][] canceledOrders() throws FileNotFoundException, IOException{
+        String line;
+        int count = 0;
+        BufferedReader br = new BufferedReader(new FileReader("Order.txt"));
+        while((line = br.readLine())!= null){
+            String[] data = line.split(",");
+            if(data[4].equalsIgnoreCase("2")){
+                count++;
+            }
+        }
+        br.close();
+        
+        Object[][]order = new Object[count][5];
+        int index = 0;
+        String line1;
+        BufferedReader br1 = new BufferedReader(new FileReader("Order.txt"));
+        while((line1 = br1.readLine())!= null){
+            String[] data = line1.split(",");
+            if(data[4].equalsIgnoreCase("2")){
+                order[index][0] = data[0];
+                order[index][1] = data[1];
+                order[index][2] = data[2];
+                order[index][3] = data[3];
+                int qty = Integer.parseInt(data[3]);
+                
+                String total = String.format("%.2f", (double)(qty * Burger.UNIT_PRICE));
+                order[index][4] = total;
+                index++;
+            }
+        }
+        br1.close();
+        return order;
+    }
+    
+    //------------------------Entered Order ID search And send Details------------------//
+    public static Burger orderIdSearchAndOrderDetails(String orderId) throws FileNotFoundException, IOException{
+        String line;
+        Burger burger = null;
+        
+        BufferedReader br = new BufferedReader(new FileReader("Order.txt"));
+        while((line = br.readLine())!= null){
+            String[] data = line.split(",");
+            if(orderId.equalsIgnoreCase(data[0].trim())){
+                String ordId = data[0];
+                String custId = data[1];
+                String name = data[2];
+                int bQty = Integer.parseInt(data[3]);
+                int status = Integer.parseInt(data[4]);
+                
+                burger = new Burger(ordId,custId,name,bQty,status);
+                break;
+            }
+        }
+        br.close();
+        return burger;
+    }
+    
+    //------------------------find update order index---------------------------//
+    public static int findIndex(String orderId){
+        String line;
+        int index = 0;
+        try {
+            BufferedReader br = new BufferedReader(new FileReader("Order.txt"));
+            while((line = br.readLine()) != null){
+                if(!line.trim().isEmpty()){
+                    String[] data = line.split(",");
+                    
+                    if(orderId.equalsIgnoreCase(data[0])){
+                       return index;
+                    }
+                }
+                index++;
+            }
+            br.close();
+        } catch (FileNotFoundException ex) {
+            System.out.println("File Error...");
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        return -1;
+    }
+    
+    //---------------------Update Order------------------------//
+    
+    public static boolean updateOrder(int index,Burger burger) throws IOException{
+        burgerLoadList();
+        boolean isUpdate = burgerList.update(index, burger);
+        
+        if(isUpdate){
+            reWrite();
+        }
+        return isUpdate;
+    }
+    
+    //---------------Re-Write file--------------------------------//
+    
+    public static void reWrite(){
+        try (FileWriter fw = new FileWriter("Order.txt")) {
+            for(int i = 0; i < burgerList.size(); i++){
+                Burger b = burgerList.get(i);
+                
+                fw.write(b.getOrderId()+","+ b.getCustomerId()+","+ b.getCustomarName()+","+ b.getBurgerQty()+","+ b.getStatus()+"\n");
+            }
+            fw.close();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+           
+    
     }
     
 }
