@@ -414,4 +414,40 @@ public class BurgerController {
         return burger;
     }
     
+    //--------------------------Preparing Order Report --------------------//
+    
+    public static Object[][] preparingOrders() throws FileNotFoundException, IOException{
+        String line;
+        int count = 0;
+        BufferedReader br = new BufferedReader(new FileReader("Order.txt"));
+        while((line = br.readLine())!= null){
+            String[] data = line.split(",");
+            if(data[4].equalsIgnoreCase("0")){
+                count++;
+            }
+        }
+        br.close();
+        
+        Object[][]order = new Object[count][5];
+        int index = 0;
+        String line1;
+        BufferedReader br1 = new BufferedReader(new FileReader("Order.txt"));
+        while((line1 = br1.readLine())!= null){
+            String[] data = line1.split(",");
+            if(data[4].equalsIgnoreCase("0")){
+                order[index][0] = data[0];
+                order[index][1] = data[1];
+                order[index][2] = data[2];
+                order[index][3] = data[3];
+                int qty = Integer.parseInt(data[3]);
+                
+                String total = String.format("%.2f", (double)(qty * Burger.UNIT_PRICE));
+                order[index][4] = total;
+                index++;
+            }
+        }
+        br1.close();
+        return order;
+    }
+    
 }
