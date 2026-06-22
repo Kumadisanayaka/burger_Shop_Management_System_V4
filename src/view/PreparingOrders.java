@@ -4,15 +4,7 @@
  */
 package view;
 
-import model.*;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.JLabel;
-import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -110,23 +102,16 @@ public class PreparingOrders extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-      String line;
+      
         DefaultTableModel dtm = (DefaultTableModel) preparingOrderstbl.getModel();
         dtm.setRowCount(0);
+        
         try {
-            BufferedReader br = new BufferedReader(new FileReader("Order.txt"));
-            while((line = br.readLine()) != null){
-                if(!line.trim().isEmpty()){
-                   String[] data = line.split(",");
-                   if(data[4].equals("0")){
-                       int qty = Integer.parseInt(data[3]);
-                       String total = String.format("%.2f", (double)qty * Burger.UNIT_PRICE);
-                       dtm.addRow(new Object[]{data[0],data[1],data[2],data[3],total});
-                   }
-                }
+            Object[][] data = controller.BurgerController.preparingOrders();
+            
+            for(int i = 0; i < data.length; i++){
+                dtm.addRow(data[i]);
             }
-        } catch (FileNotFoundException ex) {
-            System.out.println("File Error...");
         } catch (IOException ex) {
             ex.printStackTrace();
         }
