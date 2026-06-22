@@ -1,11 +1,9 @@
 package view;
 
+import static controller.BurgerController.burgerLoadList;
+import java.io.IOException;
 import model.Burger;
 import model.List;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.BufferedReader;
-import java.io.IOException;
 
 public class HomePage extends javax.swing.JFrame {
 
@@ -242,30 +240,9 @@ public class HomePage extends javax.swing.JFrame {
      */
     public static List burgerList = new List();
     
-    public static void main(String args[]) throws FileNotFoundException, IOException {
+    public static void main(String args[]) throws IOException{
        new HomePage().setVisible(true);
-       
-       BufferedReader br = new BufferedReader(new FileReader("Order.txt"));
-       
-       String line;
-       while((line = br.readLine()) != null){
-           if(!line.trim().isEmpty()){
-              String[] data = line.split(",");
-              
-              String orderId = data[0];
-              String customerId = data[1];
-              String name = data[2];
-              int burgerQty = Integer.parseInt(data[3]);
-              int status = Integer.parseInt(data[4]);
-              
-              Burger burger = new Burger(orderId,customerId,name,burgerQty,status);
-              List intList = new List();
-              intList.addLast(burger);
-              
-           }
-       }
-         br.close();
-       
+       burgerLoadList();
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 
