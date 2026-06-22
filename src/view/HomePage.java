@@ -238,11 +238,16 @@ public class HomePage extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    public static List burgerList = new List();
+    //public static List burgerList = new List();
     
     public static void main(String args[]) throws IOException{
+        try {
+            controller.BurgerController.burgerLoadList();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
        new HomePage().setVisible(true);
-       burgerLoadList();
+       
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 
