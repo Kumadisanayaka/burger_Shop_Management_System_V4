@@ -4,13 +4,6 @@
  */
 package view;
 
-import model.*;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JLabel;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
@@ -110,125 +103,12 @@ public class SearchBestCustomer extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-       int count = 0;
-        String line;
-        try {
-            BufferedReader br = new BufferedReader(new FileReader("Order.txt"));
-            while((line = br.readLine()) != null){
-                String[] data = line.split(",");
-                if(data.length > 4){
-                    if(data[4].equals("1")){
-                        count++;
-                    }
-                }
-            }
-        } catch (FileNotFoundException ex) {
-            System.out.println("File Error...");
-        } catch (IOException ex) {
-            System.out.println("File Error...");
-        }
-        
-        String[] customerIdArray = new String[count];
-        String[] nameArray = new String[count];
-        double[] totalArray = new double[count];
-        
-        line = "";
-        int index = 0;
-        try {
-            BufferedReader br = new BufferedReader(new FileReader("Order.txt"));
-            while((line = br.readLine()) != null){
-                if(!line.trim().isEmpty()){
-                    String[] data = line.split(",");
-                    if(data.length > 4){
-                        if(data[4].equalsIgnoreCase("1")){
-                            customerIdArray[index] = data[1];
-                            nameArray[index] = data[2];
-                            int qty = Integer.parseInt(data[3]);
-                            double total = (double)qty * Burger.UNIT_PRICE;
-                            totalArray[index] = total;
-                            index++;
-                            
-                        }
-                    }
-                }
-            }
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(SearchBestCustomer.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(SearchBestCustomer.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-        int count2 = 0;
-        for(int i = 0; i < customerIdArray.length; i++){
-            for(int j = i + 1; j < customerIdArray.length; j++){
-                if(customerIdArray[i].equalsIgnoreCase(customerIdArray[j])){
-                    count2++;
-                    break;
-                }
-            }
-        }
-        String[] dupRemoveCustomerIdArray = new String[customerIdArray.length - count2];
-        String[] dupRemoveNameArray = new String[customerIdArray.length - count2];
-        double[] dupRemoveTotalArray = new double[customerIdArray.length - count2];
-        
-        int in = 0;
-        boolean[] visited = new boolean[customerIdArray.length];
-        
-        for(int i = 0; i < customerIdArray.length; i++ ){
-            boolean isDup = false;
-            if(visited[i]) continue;
-            
-            for(int j = i + 1; j < customerIdArray.length; j++){
-                if(customerIdArray[i].equalsIgnoreCase(customerIdArray[j])){
-                    totalArray[i] += totalArray[j];
-                    visited[j] = true;
-                }
-            }
-            String currentCustId = customerIdArray[i];
-            String currentName = nameArray[i];
-            double currentTotal = totalArray[i];
       
-            for(int x = 0; x < dupRemoveCustomerIdArray.length; x++ ){
-                if((dupRemoveCustomerIdArray[x] != null) && currentCustId.equalsIgnoreCase(dupRemoveCustomerIdArray[x])){
-                    isDup = true;
-                }
-            }
-            
-            if(!isDup){
-                dupRemoveCustomerIdArray[in] = currentCustId;
-                dupRemoveNameArray[in] = currentName;
-                dupRemoveTotalArray[in] = currentTotal;
-                in++;
-            }
-        }
-        
-        //-------sort Array--------------------------------------
-        
-        for(int i = 0; i < dupRemoveCustomerIdArray.length; i++){
-            for(int j = i + 1; j < dupRemoveCustomerIdArray.length; j++){
-                if(dupRemoveTotalArray[i] < dupRemoveTotalArray[j]){
-                    String tempId = dupRemoveCustomerIdArray[i];
-                    dupRemoveCustomerIdArray[i] = dupRemoveCustomerIdArray[j];
-                    dupRemoveCustomerIdArray[j] = tempId;
-                    
-                    String tempName = dupRemoveNameArray[i];
-                    dupRemoveNameArray[i] = dupRemoveNameArray[j];
-                    dupRemoveNameArray[j] = tempName;
-                    
-                    double tempTotal = dupRemoveTotalArray[i];
-                    dupRemoveTotalArray[i] = dupRemoveTotalArray[j];
-                    dupRemoveTotalArray[j] = tempTotal;
-                }
-            }
-        }
-        
+        Object[][] customer = controller.BurgerController.searBestCoustome();
         DefaultTableModel dtm = (DefaultTableModel) bestCustomertbl.getModel();
         
-        for(int i = 0; i < dupRemoveCustomerIdArray.length; i++){
-            dtm.addRow(new Object[]{
-                dupRemoveCustomerIdArray[i],
-                dupRemoveNameArray[i],
-                dupRemoveTotalArray[i]});
+        for(int i = 0; i < customer.length; i++){
+            dtm.addRow(customer[i]);
         }
         
         //------------------Table Stylish---------------------
