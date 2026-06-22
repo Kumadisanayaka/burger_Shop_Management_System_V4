@@ -393,4 +393,25 @@ public class BurgerController {
         return name;
     }
     
+    //----------------------------Search Order---------------------//
+    
+    public static Burger searchOrder(String orderId) throws FileNotFoundException, IOException{
+        String line;
+        Burger burger = null;
+        BufferedReader br = new BufferedReader(new FileReader("Order.txt"));
+        while((line = br.readLine())!= null){
+            String[] data = line.split(",");
+            if(orderId.equalsIgnoreCase(data[0])){
+                String orderID = data[0];
+                String custID = data[1];
+                String name = data[2];
+                int qty = Integer.parseInt(data[3]);
+                int status = Integer.parseInt(data[4]);
+                
+                burger = new Burger(orderID,custID,name,qty,status);
+            }
+        }
+        return burger;
+    }
+    
 }
