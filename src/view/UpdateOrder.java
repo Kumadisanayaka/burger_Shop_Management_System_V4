@@ -5,17 +5,10 @@
 package view;
 
 import model.*;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -211,7 +204,7 @@ public class UpdateOrder extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-       
+     orderIdtxt.requestFocus();
     }//GEN-LAST:event_formWindowOpened
 
     private void backbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backbtnActionPerformed
@@ -220,7 +213,7 @@ public class UpdateOrder extends javax.swing.JFrame {
     }//GEN-LAST:event_backbtnActionPerformed
 
     private void orderIdtxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_orderIdtxtActionPerformed
-        String orderId = orderIdtxt.getText();
+        String orderId = orderIdtxt.getText().trim();
         boolean isValid = false;
         if((orderId.length() != 4) || (orderId.charAt(0) != 'O' && orderId.charAt(0) != 'o')){
             JOptionPane.showMessageDialog(this, "Invalid Order ID...Please Re-Enter...");
@@ -228,128 +221,102 @@ public class UpdateOrder extends javax.swing.JFrame {
             isValid = true;
         }
         if(!isValid){
-            boolean isFound = false;
-            String line;
             try {
-                BufferedReader br = new BufferedReader(new FileReader("Order.txt"));
-                while((line = br.readLine()) != null){
-                    if(!line.trim().isEmpty()){
-                        String[] data = line.split(",");
-                        if(orderId.equalsIgnoreCase(data[0])){
-                            isFound = true;
-                            int qty = Integer.parseInt(data[3]);
-                            String total = String.format("%.2f", (double)qty * Burger.UNIT_PRICE);
-                            switch(data[4]){
-                                case "1":
-                                    statuscmb.setSelectedIndex(1);
-                                    statuscmb.setEnabled(false);
-                                    customertxt.setText(data[1]);
-                                    customertxt.setEditable(false);
-                                    nametxt.setText(data[2]);
-                                    nametxt.setEditable(false);
-                                    orderQtytxt.setText(data[3]);
-                                    orderQtytxt.setEditable(false);
-                                    totaltxt.setText(total);
-                                    totaltxt.setEditable(false);
-                                    JOptionPane.showMessageDialog(this, "This Order is Already Delivered...");
-                                    break;
-                                
-                                case "2":
-                                    statuscmb.setSelectedIndex(2);
-                                    statuscmb.setEnabled(false);
-                                    customertxt.setText(data[1]);
-                                    customertxt.setEditable(false);
-                                    nametxt.setText(data[2]);
-                                    nametxt.setEditable(false);
-                                    orderQtytxt.setText(data[3]);
-                                    orderQtytxt.setEditable(false);
-                                    totaltxt.setText(total);
-                                    totaltxt.setEditable(false);
-                                    JOptionPane.showMessageDialog(this, "This Order is Already Canceled...");
-                                    break;
-                                    
-                                case "0":
-                                    statuscmb.setSelectedIndex(0);
-                                    statuscmb.setEnabled(true);
-                                    customertxt.setText(data[1]);
-                                    customertxt.setEditable(false);
-                                    nametxt.setText(data[2]);
-                                    nametxt.setEditable(false);
-                                    orderQtytxt.setText(data[3]);
-                                    orderQtytxt.setEditable(true);
-                                    totaltxt.setText(total);
-                                    totaltxt.setEditable(false);
-                                    break;
-                                     
-                            }
-                        }
+                Burger burger = controller.BurgerController.orderIdSearchAndOrderDetails(orderId);
+                if(burger != null){
+                    String total = String.format("%.2f", (double)(burger.getBurgerQty() * Burger.UNIT_PRICE));
+                    switch(burger.getStatus()){
+                        case 0:
+                            statuscmb.setSelectedIndex(0);
+                            statuscmb.setEnabled(true);
+                            customertxt.setText(burger.getCustomerId());
+                            customertxt.setEditable(false);
+                            nametxt.setText(burger.getCustomarName());
+                            nametxt.setEditable(false);
+                            orderQtytxt.setText(burger.getBurgerQty()+"");
+                            orderQtytxt.setEditable(true);
+                            totaltxt.setText(total);
+                            totaltxt.setEditable(false);
+                            break;
+                        
+                        case 1:
+                            statuscmb.setSelectedIndex(1);
+                            statuscmb.setEnabled(false);
+                            customertxt.setText(burger.getCustomerId());
+                            customertxt.setEditable(false);
+                            nametxt.setText(burger.getCustomarName());
+                            nametxt.setEditable(false);
+                            orderQtytxt.setText(burger.getBurgerQty()+"");
+                            orderQtytxt.setEditable(false);
+                            totaltxt.setText(total);
+                            totaltxt.setEditable(false);
+                            JOptionPane.showMessageDialog(this, "This Order is Already Delivered...");
+                            break;
+                        case 2:
+                            statuscmb.setSelectedIndex(2);
+                            statuscmb.setEnabled(false);
+                            customertxt.setText(burger.getCustomerId());
+                            customertxt.setEditable(false);
+                            nametxt.setText(burger.getCustomarName());
+                            nametxt.setEditable(false);
+                            orderQtytxt.setText(burger.getBurgerQty()+"");
+                            orderQtytxt.setEditable(false);
+                            totaltxt.setText(total);
+                            totaltxt.setEditable(false);
+                            JOptionPane.showMessageDialog(this, "This Order is Already Canceled...");
+                            break;
+
                     }
+                }else{
+                    JOptionPane.showMessageDialog(this, "This Order not Added yet to system... ");
+                    customertxt.setText("");
+                    nametxt.setText("");
+                    orderQtytxt.setText("");
+                    totaltxt.setText("");
+                            
                 }
-                br.close();
-                if(!isFound){
-                    JOptionPane.showMessageDialog(this, "Order ID is Not Found...");
-                }
-                
-            } catch (FileNotFoundException ex) {
-                System.out.println("File Error...");
             } catch (IOException ex) {
                 ex.printStackTrace();
             }
             
         }
     }//GEN-LAST:event_orderIdtxtActionPerformed
-    public int findIndex(){
-        String orderId = orderIdtxt.getText();
-        String line;
-        int index = 0;
-        try {
-            BufferedReader br = new BufferedReader(new FileReader("Order.txt"));
-            while((line = br.readLine()) != null){
-                if(!line.trim().isEmpty()){
-                    String[] data = line.split(",");
-                    
-                    if(orderId.equalsIgnoreCase(data[0])){
-                       return index;
-                    }
-                }
-                index++;
-            }
-            br.close();
-        } catch (FileNotFoundException ex) {
-            System.out.println("File Error...");
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
-        return -1;
-    }
     
     private void updatebtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updatebtnActionPerformed
-        int statusIndex = statuscmb.getSelectedIndex();
-        int index = findIndex();
+        
+        String orderId = orderIdtxt.getText();
+        int index = controller.BurgerController.findIndex(orderId);
+        
+        if(index == -1){
+            JOptionPane.showMessageDialog(this, "Order id not found");
+        }
         int qty = Integer.parseInt(orderQtytxt.getText());
         String total = String.format("%.2f", (double)qty * Burger.UNIT_PRICE);
         totaltxt.setText(total);
         
-        String orderId = orderIdtxt.getText();
+        int statusIndex = statuscmb.getSelectedIndex();
         String customerId = customertxt.getText();
         String customerName = nametxt.getText();
         int burgerQty = qty;
         int status = statusIndex;
         
         Burger burger = new Burger(orderId,customerId,customerName,burgerQty,status);
-        HomePage.burgerList.update(index,burger);
+        boolean isAdd = false;
         
-        JOptionPane.showMessageDialog(this, "Order Updated Successfully.!");
         try {
-            FileWriter fw = new FileWriter("Order.txt");
-            
-            for(int i = 0; i < HomePage.burgerList.size(); i++){
-                Burger b = HomePage.burgerList.get(i);
-                
-                fw.write(b.getOrderId()+","+ b.getCustomerId()+","+ b.getCustomarName()+","+ b.getBurgerQty()+","+ b.getStatus()+"\n");
-            }
-            fw.close();
-            
+            isAdd = controller.BurgerController.updateOrder(index,burger);
+        } catch (IOException ex) {
+            Logger.getLogger(UpdateOrder.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        
+        if(isAdd){
+            JOptionPane.showMessageDialog(this, "Order Updated Successfully.!");
+           
+        }else{
+            JOptionPane.showMessageDialog(this, "Order Not Update!");
+        }
+   
             int selectIn = statuscmb.getSelectedIndex();
             switch(selectIn){
                 case 1:
@@ -364,14 +331,7 @@ public class UpdateOrder extends javax.swing.JFrame {
                     statuscmb.setEnabled(true);
                     orderQtytxt.setEditable(true);
             }
-            
-            
-            
-            
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
-        
+          
     }//GEN-LAST:event_updatebtnActionPerformed
 
     /**
