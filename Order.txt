@@ -11,3 +11,5 @@ O008,C004,Frank,6,1
 O009,C005,Kalum,8,0
 O010,C006,sara,15,0
 O011,C006,sara,15,1
+O012,C007,ekanayaka,6,0
+O013,C008,sandun,7,0
