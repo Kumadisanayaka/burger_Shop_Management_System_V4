@@ -230,59 +230,46 @@ public class SearchOrderDetails extends javax.swing.JFrame {
         String orderId = orderIdtxt.getText();
         boolean isValid = false;
         if((orderId.length() != 4) || (orderId.charAt(0) != 'O' && orderId.charAt(0) != 'o')){
-            JOptionPane.showMessageDialog(this, "Invalid Order ID...Please Re-Enter...");
             orderIdtxt.setText("");
+            customerIdtxt.setText("");
+            nametxt.setText("");
+            qtytxt.setText("");
+            totaltxt.setText("");
+            statustxt.setText("");
             isValid = true;
+            JOptionPane.showMessageDialog(this, "Invalid Order ID...Please Re-Enter...");
         }
         if(!isValid){
-            boolean found = false;
-            String line;
             try {
-                BufferedReader br = new BufferedReader(new FileReader("Order.txt"));
-                while((line = br.readLine()) != null){
-                    if(!line.trim().isEmpty()){
-                        String[] data = line.split(",");
-                        if(orderId.equalsIgnoreCase(data[0])){
-                            found = true;
-                            customerIdtxt.setText(data[1]);
-                            customerIdtxt.setEditable(false);
-                            nametxt.setText(data[2]);
-                            nametxt.setEditable(false);
-                            int qty = Integer.parseInt(data[3]);
-                            qtytxt.setText(data[3]);
-                            qtytxt.setEditable(false);
-                            double total = qty * Burger.UNIT_PRICE;
-                            totaltxt.setText(total+"");
-                            totaltxt.setEditable(false);
-                            String status = "";
-                            switch(data[4]){
-                                case "0":
-                                    status = "Preparing...";
-                                    break;
-                                case "1":
-                                    status = "Delivered...";
-                                    break;
-                                case "2":
-                                    status = "Canceled...";
-                                    break;   
-                            }
-                            statustxt.setText(status);
-                            statustxt.setEditable(false);
-                            break;
-                        }
+                Burger burger = controller.BurgerController.searchOrder(orderId);
+                 boolean found = false;
+                if(burger != null){
+                    customerIdtxt.setText(burger.getCustomerId());
+                    nametxt.setText(burger.getCustomarName());
+                    qtytxt.setText(burger.getBurgerQty()+"");
+                    totaltxt.setText((burger.getBurgerQty() * Burger.UNIT_PRICE)+"");
+                    String status = "";
+                    switch(burger.getStatus()){
+                        case 0:
+                           status = "Preparing...";
+                           break;
+                        case 1:
+                           status = "Delivered...";
+                           break;
+                        case 2:
+                           status = "Canceled...";
+                           break;     
                     }
+                    statustxt.setText(status);
+                    found = true;
                 }
-                br.close();
-                
-             if(!found){
-                JOptionPane.showMessageDialog(this, "Order ID is Not Found...");
-            }
-             
-            } catch (FileNotFoundException ex) {
-                JOptionPane.showMessageDialog(this, "File is Not found...");
+                if(!found){
+                    JOptionPane.showMessageDialog(this, "Order ID is not found!");
+                    orderIdtxt.setText("");
+                }
             } catch (IOException ex) {
                 ex.printStackTrace();
-            }
+            }            
         }
     }//GEN-LAST:event_orderIdtxtActionPerformed
 
