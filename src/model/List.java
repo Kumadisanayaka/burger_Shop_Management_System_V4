@@ -44,21 +44,15 @@ public class List {
    }
    //-------------Update Order---------//
    public boolean update(int index, Burger burger){
-       Node node = new Node(burger);
        Node temp = first;
        if(index >= 0 && index < size()){
-           if(index == 0){
-               node.next = temp.next;
-               temp = node;
-           }else{
             int count = 0;
             while(count < index){
                 temp = temp.next;
                 count++;
            }
-            node.next = temp.next;
-            temp = node;
-           }
+            temp.burger = burger;
+ 
            return true;
        }
        return false;
