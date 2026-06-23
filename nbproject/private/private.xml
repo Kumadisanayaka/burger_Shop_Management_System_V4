@@ -4,10 +4,12 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/C:/Users/User/ICD121/BurgerShop_Management_System_V4/src/model/List.java</file>
-            <file>file:/C:/Users/User/ICD121/BurgerShop_Management_System_V4/src/view/UpdateOrder.java</file>
             <file>file:/C:/Users/User/ICD121/BurgerShop_Management_System_V4/src/view/HomePage.java</file>
-            <file>file:/C:/Users/User/ICD121/BurgerShop_Management_System_V4/src/view/SearchBestCustomer.java</file>
+            <file>file:/C:/Users/User/ICD121/BurgerShop_Management_System_V4/src/view/UpdateOrder.java</file>
+            <file>file:/C:/Users/User/ICD121/BurgerShop_Management_System_V4/Order.txt</file>
+            <file>file:/C:/Users/User/ICD121/BurgerShop_Management_System_V4/src/controller/BurgerController.java</file>
             <file>file:/C:/Users/User/ICD121/BurgerShop_Management_System_V4/src/model/Burger.java</file>
+            <file>file:/C:/Users/User/ICD121/BurgerShop_Management_System_V4/src/view/PlaceOrder.java</file>
         </group>
     </open-files>
 </project-private>
