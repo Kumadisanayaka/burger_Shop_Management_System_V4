@@ -250,6 +250,7 @@ public class UpdateOrder extends javax.swing.JFrame {
                             orderQtytxt.setEditable(false);
                             totaltxt.setText(total);
                             totaltxt.setEditable(false);
+                            updatebtn.setEnabled(false);
                             JOptionPane.showMessageDialog(this, "This Order is Already Delivered...");
                             break;
                         case 2:
@@ -263,6 +264,7 @@ public class UpdateOrder extends javax.swing.JFrame {
                             orderQtytxt.setEditable(false);
                             totaltxt.setText(total);
                             totaltxt.setEditable(false);
+                            updatebtn.setEnabled(false);
                             JOptionPane.showMessageDialog(this, "This Order is Already Canceled...");
                             break;
 
@@ -322,10 +324,12 @@ public class UpdateOrder extends javax.swing.JFrame {
                 case 1:
                     statuscmb.setEnabled(false);
                     orderQtytxt.setEditable(false);
+                    updatebtn.setEnabled(false);
                     break;
                 case 2:
                     statuscmb.setEnabled(false);
                     orderQtytxt.setEditable(false);
+                    updatebtn.setEnabled(false);
                     break;
                 default:
                     statuscmb.setEnabled(true);
